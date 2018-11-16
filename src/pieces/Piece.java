@@ -7,9 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public abstract class Piece extends Group {
+public abstract class Piece extends Group implements Moveable {
+
+	public static boolean getActive;
+	private Color color;
 
 	public Piece(Color c) {
+		
+		this.color = c;
 
 		String COLOR = "WHITE";
 		if (c == Color.BLACK) {
@@ -23,6 +28,18 @@ public abstract class Piece extends Group {
 		this.getChildren().add(iv);
 
 	}
+	
+	public Color getColor(){
+		return this.color;
+	}
+
+	public void showMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 
 	
 

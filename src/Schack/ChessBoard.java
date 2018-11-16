@@ -1,5 +1,7 @@
 package Schack;
 
+import java.util.ArrayList;
+
 import Schack.Square;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -12,8 +14,11 @@ import pieces.Rook;
 
 public class ChessBoard extends Group {
 	
+	public static ArrayList<ArrayList<Square>>all_squares = new ArrayList<ArrayList<Square>>();
+	
 	public ChessBoard(){
 		for(int i = 0; i < 8; i++ ){
+			ArrayList<Square> Square_row = new ArrayList<Square>();
 			for(int j = 0; j < 8; j++){
 				
 				Color c = Color.BROWN;
@@ -26,6 +31,8 @@ public class ChessBoard extends Group {
 				s.setTranslateY(i*Square.SIZE);
 	
 				this.getChildren().add(s);
+				Square_row.add(s);
+				
 				//Bönder
 				if(i == 1){
 					s.addPiece(new Pawn(Color.BLACK));
@@ -70,7 +77,12 @@ public class ChessBoard extends Group {
 				}
 			
 			}
+			all_squares.add(Square_row);
 		} 
+	}
+	
+	public static Square getSquare(int x, int y){
+		return all_squares.get(y).get(x);
 	}
 
 }
