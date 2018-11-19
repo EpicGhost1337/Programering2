@@ -27,6 +27,14 @@ public class Square extends Group {
 			
 			this.setOnMouseClicked(event -> {
 				
+				if(marked.contains(this)){ // Kollar om det finn ruta
+					Piece p = active.piece;
+					active.makeInactive();
+					this.addPiece(p);
+					p.move();
+					return;
+					
+				}
                 //Example
 				if (hasPiece()) {
 					//if (!this.getBackground().getFill().equals(originalColor)) {
