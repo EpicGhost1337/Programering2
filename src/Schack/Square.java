@@ -27,31 +27,46 @@ public class Square extends Group {
 			
 			this.setOnMouseClicked(event -> {
 				
-				if(marked.contains(this)){ // Kollar om det finn ruta
+				if(marked.contains(this)){ // Kollar om det finns ruta
+					
+					 if(this.hasPiece()){
+	                        this.getChildren().remove(this.piece);
+	                        this.piece = null;
+	                    }
+
 					Piece p = active.piece;
+					active.piece = null;
 					active.makeInactive();
 					this.addPiece(p);
 					p.move();
 					return;
 					
 				}
-                //Example
-				if (hasPiece()) {
-					//if (!this.getBackground().getFill().equals(originalColor)) {
-						//this.getBackground().setFill(originalColor);
-					makeActive();	
-					}else{
-						if(active != null){
-						active.makeInactive();
+				    if (!hasPiece()) {
+					    return;
+			  	}
+					if (hasPiece()) {
+						makeActive();	
+						@SuppressWarnings("unused")
+						int getX = getX();
+						@SuppressWarnings("unused")
+						int getY = getY();
+						}else{
+							if(active != null){
+							active.makeInactive();
+							}
+							moveMark();
 						}
-						moveMark();
-					}
 					
-				
-
 			});
 		}
-		
+	
+		@SuppressWarnings("unused")
+		private boolean hasMoveMark() {
+			return this.getChildren().get(this.getChildren().size() - 1) instanceof Circle;
+
+		}
+
 		public void makeInactive(){ 
 			this.getBackground().setFill(originalColor); // rutan blir orginalfärgen 
 			active = null; // Gör DENNA rutan inaktive 
@@ -110,5 +125,37 @@ public class Square extends Group {
         	marked.clear();
         	
         }
+
+		public void attackMark() {
+			Circle cir = new Circle(Square.SIZE/2,Square.SIZE/2,Square.SIZE/5,Color.RED);
+        	this.getChildren().add(cir);
+        	marked.add(this);
+			
+		}
+		public void Mark(Color c) {
+			if(!this.hasPiece()){
+				moveMark();
+			}
+			else{
+				if(this.piece.getColor() != c){
+					attackMark();
+				}
+			}
+		}
+
+		public Color getPieceColor() {
+			return this.piece.getColor();
+		}
+		
+		public Boolean turn(int i) {
+			boolean whiteTurn = true;
+			if (i % 2 == 0) {
+				return whiteTurn = false;
+			} else {
+				return whiteTurn;
+			}
+		}
+
+		
 
 }
