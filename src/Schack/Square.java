@@ -55,7 +55,7 @@ public class Square extends Group {
 							if(active != null){
 							active.makeInactive();
 							}
-							moveMark();
+                            Mark(this.piece.getColor());
 						}
 					
 			});
