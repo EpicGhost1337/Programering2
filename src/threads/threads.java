@@ -3,53 +3,31 @@ package threads;
 import java.util.Scanner;
 
 public class threads {
-      
-	public static void main(String[] args) {
-		
-		System.out.println(Thread.currentThread().getName());
-		
-	//	Runnable r = new Runnable() {
-			
-		//	@Override
-		//	public void run() {
-				
-			//	System.out.println("Hello from " + Thread.currentThread().getName());
-				
-		//	}
-	//	};
-		
-		Runnable r = () -> {
-			System.out.println("Hello from " + Thread.currentThread().getName());
-		};
-		
-		//MyTread t = new MyTread();
-	    //t.start();
-		
-		Thread t2 = new Thread(r);
-		t2.setName("Dö");
-		System.out.println(t2.getState());
-		t2.start();
-		System.out.println(t2.getState());
-		
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.println(sc.next());
-		System.out.println(t2.getState());
-		
-	}
-	
-}
 
-class MyTread extends Thread{
-	
-	public void run(){
-		while(true){
+	public static void main(String[] args) {
+
+		System.out.println("1 " + Thread.currentThread().getName());
+
+		Runnable r = () -> {
+			System.out.println("2 " + Thread.currentThread().getName());
+		};
+
+		Thread t = new Thread(r);
+		t.start();
+
+		int i = 0;
+		while (true) {
 			try {
-				Thread.sleep(5000);
-			} catch (Exception e) {
-				// TODO: handle exception
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
 			}
+			i++;
 			System.out.println("hej");
+			if (i > 10000000) {
+				break;
+			}
 		}
+
 	}
+
 }
