@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import pieces.King;
 import pieces.Piece;
 
 public class Square extends Group {
@@ -17,6 +18,7 @@ public class Square extends Group {
 		private Piece piece;
 		private Color originalColor;
 		public static Square active;
+		private static int turnCounter = 0;
 		private Rectangle r;
 
 		
@@ -27,25 +29,42 @@ public class Square extends Group {
 			
 			this.setOnMouseClicked(event -> {
 				
+				if (this.piece instanceof King) { // om kungen dör
+					if (this.piece.getColor() == Color.WHITE) {
+						System.out.println("Svart vinner");
+					}
+					else if(this.piece.getColor() == Color.BLACK){
+						System.out.println("Vitt vinner");
+					}
+				}
+				
 				if(marked.contains(this)){ // Kollar om det finns ruta
 					
-					 if(this.hasPiece()){
+					 if(this.hasPiece()){ // Om en pjäs har tagit annan pjäs så remova den bort
 	                        this.getChildren().remove(this.piece);
 	                        this.piece = null;
 	                    }
-
+					 
 					Piece p = active.piece;
 					active.piece = null;
 					active.makeInactive();
 					this.addPiece(p);
+					turnCounter++; 
+					System.out.println("Turn #"+ turnCounter); 
 					p.move();
 					return;
 					
 				}
-				    if (!hasPiece()) {
+				    if (!hasPiece()) { //
 					    return;
 			  	}
 					if (hasPiece()) {
+						if (turnCounter % 2 == 0 && piece.getColor() == Color.BLACK) { // Vitt tur 
+							return;
+						}
+						if (turnCounter % 2 == 1 && piece.getColor() == Color.WHITE) { // Svart tur 
+							return;
+		                }
 						makeActive();	
 						@SuppressWarnings("unused")
 						int getX = getX();
@@ -126,7 +145,7 @@ public class Square extends Group {
         	
         }
 
-		public void attackMark() {
+		public void attackMark() { 
 			Circle cir = new Circle(Square.SIZE/2,Square.SIZE/2,Square.SIZE/5,Color.RED);
         	this.getChildren().add(cir);
         	marked.add(this);
@@ -147,7 +166,7 @@ public class Square extends Group {
 			return this.piece.getColor();
 		}
 		
-		public Boolean turn(int i) {
+		public Boolean turn(int i) { 
 			boolean whiteTurn = true;
 			if (i % 2 == 0) {
 				return whiteTurn = false;
@@ -159,3 +178,4 @@ public class Square extends Group {
 		
 
 }
+//Made By EpicGhost1337 //
