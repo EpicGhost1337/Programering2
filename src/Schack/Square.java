@@ -33,9 +33,10 @@ public class Square extends Group {
 					if (this.piece.getColor() == Color.WHITE) {
 						System.out.println("Svart vinner");
 					}
-					else if(this.piece.getColor() == Color.BLACK){
+					else{
 						System.out.println("Vitt vinner");
 					}
+					return;
 				}
 				
 				if(marked.contains(this)){ // Kollar om det finns ruta
